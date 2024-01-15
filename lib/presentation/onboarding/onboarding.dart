@@ -17,12 +17,10 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-
-  
   final PageController _pageController = PageController(initialPage: 0);
-  OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  final OnBoardingViewModel _viewModel = OnBoardingViewModel();
 
-  _bindViewModel(){
+  _bindViewModel() {
     _viewModel.start();
   }
 
@@ -32,47 +30,39 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     super.initState();
   }
 
-
-
-  
-
-
-
-
   @override
   Widget build(BuildContext context) {
-   return StreamBuilder(stream: _viewModel.outputSliderViewObject, 
-   builder: (context, snapshot) {
-     return _getContentWidget(snapshot.data);
-   });
+    return StreamBuilder(
+        stream: _viewModel.outputSliderViewObject,
+        builder: (context, snapshot) {
+          return _getContentWidget(snapshot.data);
+        });
   }
 
-  Widget _getContentWidget(SliderViewObject? sliderViewObject){
-
-    if (sliderViewObject == null){
+  Widget _getContentWidget(SliderViewObject? sliderViewObject) {
+    if (sliderViewObject == null) {
       return const SizedBox.shrink();
     }
 
-
-     return Scaffold(
+    return Scaffold(
       backgroundColor: ColorManager.white,
-      appBar: AppBar( 
+      appBar: AppBar(
         elevation: AppSize.s0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: ColorManager.white,
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.dark,
-          ),
+        ),
       ),
       body: PageView.builder(
-        controller: _pageController,
-        itemCount: sliderViewObject.totalItems,
-        onPageChanged: (value) {
-          _viewModel.onPageChanged(value);
-        },
-        itemBuilder: (context,index){
-          return OnBoardingPage(sliderObject: sliderViewObject.sliderObject);
-        }),
+          controller: _pageController,
+          itemCount: sliderViewObject.totalItems,
+          onPageChanged: (value) {
+            _viewModel.onPageChanged(value);
+          },
+          itemBuilder: (context, index) {
+            return OnBoardingPage(sliderObject: sliderViewObject.sliderObject);
+          }),
       bottomSheet: Container(
         color: ColorManager.white,
         height: AppSize.s100,
@@ -84,91 +74,75 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
                 },
-                child: Text(
-                  AppStrings.skip,
-                  textAlign: TextAlign.end,
-                  style: Theme.of(context).textTheme.titleSmall
-                ),
+                child: Text(AppStrings.skip,
+                    textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.titleSmall),
               ),
             ),
             _getBottomSheet(sliderViewObject),
           ],
         ),
       ),
-      );
+    );
   }
 
-  Widget _getBottomSheet(SliderViewObject sliderViewObject){
+  Widget _getBottomSheet(SliderViewObject sliderViewObject) {
     return Container(
       color: ColorManager.primary,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-      
           Padding(
             padding: const EdgeInsets.all(AppPadding.p14),
             child: GestureDetector(
-              child: SizedBox(
-                width: AppSize.s20,
-                height: AppSize.s20,
-                child: SvgPicture.asset(ImageAssets.leftArrow),
-              ),
-              onTap: (){
-                _pageController.animateToPage(
-                _viewModel.goPrevious(),
-                duration: const Duration(milliseconds: DurationConstant.d300), 
-                curve: Curves.bounceInOut
-              );
-              }
-            ),
+                child: SizedBox(
+                  width: AppSize.s20,
+                  height: AppSize.s20,
+                  child: SvgPicture.asset(ImageAssets.leftArrow),
+                ),
+                onTap: () {
+                  _pageController.animateToPage(_viewModel.goPrevious(),
+                      duration:
+                          const Duration(milliseconds: DurationConstant.d300),
+                      curve: Curves.bounceInOut);
+                }),
           ),
-          
-          Row(
-            children: [
-              for(int i = 0; i < sliderViewObject.totalItems; i++)
-                Padding(padding: const EdgeInsets.all(AppPadding.p8), child: _getProperCircle(i, sliderViewObject.currentIndex))
-                
-            ]
-          ),
-      
+          Row(children: [
+            for (int i = 0; i < sliderViewObject.totalItems; i++)
+              Padding(
+                  padding: const EdgeInsets.all(AppPadding.p8),
+                  child: _getProperCircle(i, sliderViewObject.currentIndex))
+          ]),
           Padding(
             padding: const EdgeInsets.all(AppPadding.p14),
             child: GestureDetector(
-              child: SizedBox(
-                width: AppSize.s20,
-                height: AppSize.s20,
-                child: SvgPicture.asset(ImageAssets.rightArrow),
-              ),
-              onTap: (){
-                _pageController.animateToPage(
-                _viewModel.goNext(), 
-                duration: const Duration(milliseconds: DurationConstant.d300), 
-                curve: Curves.bounceInOut
-              );
-              }
-            ),
+                child: SizedBox(
+                  width: AppSize.s20,
+                  height: AppSize.s20,
+                  child: SvgPicture.asset(ImageAssets.rightArrow),
+                ),
+                onTap: () {
+                  _pageController.animateToPage(_viewModel.goNext(),
+                      duration:
+                          const Duration(milliseconds: DurationConstant.d300),
+                      curve: Curves.bounceInOut);
+                }),
           )
-          
         ],
       ),
     );
   }
 
-  
-  Widget _getProperCircle(int index, int _currentIndex){
-  
-    if (index == _currentIndex){
+  Widget _getProperCircle(int index, int _currentIndex) {
+    if (index == _currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircle);
-    }
-    else{
+    } else {
       return SvgPicture.asset(ImageAssets.solidCircle);
     }
-
-
   }
 }
-class OnBoardingPage extends StatelessWidget {
 
+class OnBoardingPage extends StatelessWidget {
   final SliderObject sliderObject;
 
   const OnBoardingPage({super.key, required this.sliderObject});
@@ -178,15 +152,16 @@ class OnBoardingPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(height: AppSize.s40,),
-
+        const SizedBox(
+          height: AppSize.s40,
+        ),
         Padding(
           padding: const EdgeInsets.all(AppPadding.p8),
           child: Text(
             sliderObject.title,
             style: Theme.of(context).textTheme.displayLarge,
             textAlign: TextAlign.center,
-            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(AppPadding.p8),
@@ -194,15 +169,13 @@ class OnBoardingPage extends StatelessWidget {
             sliderObject.subTitle,
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
-            ),
+          ),
         ),
-        const SizedBox(height: AppSize.s60,),
-        
+        const SizedBox(
+          height: AppSize.s60,
+        ),
         SvgPicture.asset(sliderObject.image),
-
       ],
     );
   }
 }
-
-

@@ -4,15 +4,11 @@ abstract class NetworkInfo {
   Future<bool> get isConnected;
 }
 
-class NetworkInfoImplemeter extends NetworkInfo{
-
-  InternetConnectionChecker _internetConnectionChecker;
+class NetworkInfoImplemeter extends NetworkInfo {
+  final InternetConnectionChecker _internetConnectionChecker;
 
   NetworkInfoImplemeter(this._internetConnectionChecker);
 
-
   @override
-  
   Future<bool> get isConnected => _internetConnectionChecker.hasConnection;
-
 }
