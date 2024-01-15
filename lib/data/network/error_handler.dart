@@ -1,3 +1,5 @@
+import 'package:tut_app/data/network/failure.dart';
+
 enum DataSource {
   success,
   noContent,
@@ -12,6 +14,59 @@ enum DataSource {
   sendTimeout,
   cacheTimeout,
   noInternetConnection
+}
+
+extension DataSourceExtension on DataSource {
+  Failure getFailure() {
+    switch (this) {
+      case DataSource.badRequest:
+        return Failure(
+            statusCode: ResponseCode.badRequest,
+            message: ResponseMessage.badRequest);
+      case DataSource.unauthorized:
+        return Failure(
+            statusCode: ResponseCode.unauthorized,
+            message: ResponseMessage.unauthorized);
+      case DataSource.forbidden:
+        return Failure(
+            statusCode: ResponseCode.forbidden,
+            message: ResponseMessage.forbidden);
+      case DataSource.notFound:
+        return Failure(
+            statusCode: ResponseCode.notFound,
+            message: ResponseMessage.notFound);
+      case DataSource.internalServerError:
+        return Failure(
+            statusCode: ResponseCode.internalServerError,
+            message: ResponseMessage.internalServerError);
+      case DataSource.connectTimeout:
+        return Failure(
+            statusCode: ResponseCode.connectTimeout,
+            message: ResponseMessage.connectTimeout);
+      case DataSource.cancel:
+        return Failure(
+            statusCode: ResponseCode.cancel, message: ResponseMessage.cancel);
+      case DataSource.reciveTimeout:
+        return Failure(
+            statusCode: ResponseCode.reciveTimeout,
+            message: ResponseMessage.reciveTimeout);
+      case DataSource.sendTimeout:
+        return Failure(
+            statusCode: ResponseCode.sendTimeout,
+            message: ResponseMessage.sendTimeout);
+      case DataSource.cacheTimeout:
+        return Failure(
+            statusCode: ResponseCode.cacheTimeout,
+            message: ResponseMessage.cacheTimeout);
+      case DataSource.noInternetConnection:
+        return Failure(
+            statusCode: ResponseCode.noInternetConnection,
+            message: ResponseMessage.noInternetConnection);
+      default:
+        return Failure(
+            statusCode: ResponseCode.unknown, message: ResponseMessage.unknown);
+    }
+  }
 }
 
 class ResponseCode {
