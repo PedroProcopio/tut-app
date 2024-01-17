@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:tut_app/data/network/failure.dart';
 
 enum DataSource {
@@ -13,7 +15,63 @@ enum DataSource {
   reciveTimeout,
   sendTimeout,
   cacheTimeout,
+  unknown,
   noInternetConnection
+}
+
+
+class ErrorHandler implements Exception{
+  late Failure failure;
+
+  ErrorHandler.handle(dynamic error){
+    if(error is DioException){
+
+      failure = _handleError(error);
+
+    }
+    else{
+      failure = DataSource.unknown.getFailure();
+
+    }
+
+  }
+
+  
+
+  Failure _handleError(DioException error){
+
+    switch(error.type){
+      case DioExceptionType:
+        return DataSource.connectTimeout.getFailure();
+      case DioExceptionType.cancel:
+        return DataSource.cancel.getFailure();
+      case DioExceptionType.receiveTimeout:
+        return DataSource.reciveTimeout.getFailure();
+      case DioExceptionType.sendTimeout:
+        return DataSource.sendTimeout.getFailure();
+      case DioExceptionType.badResponse:
+        switch(error.response!.statusCode){
+          case ResponseCode.badRequest:
+            return DataSource.badRequest.getFailure();
+          case ResponseCode.unauthorized:
+            return DataSource.unauthorized.getFailure();
+          case ResponseCode.forbidden:
+            return DataSource.forbidden.getFailure();
+          case ResponseCode.notFound:
+            return DataSource.notFound.getFailure();
+          case ResponseCode.internalServerError:
+            return DataSource.internalServerError.getFailure();
+          default:
+            return DataSource.unknown.getFailure();
+
+
+        }
+      case DioExceptionType.unknown:
+        return DataSource.unknown.getFailure();
+      default:
+        return DataSource.unknown.getFailure();
+    }
+  }
 }
 
 extension DataSourceExtension on DataSource {
@@ -62,11 +120,21 @@ extension DataSourceExtension on DataSource {
         return Failure(
             statusCode: ResponseCode.noInternetConnection,
             message: ResponseMessage.noInternetConnection);
+      case DataSource.unknown:
+        return Failure(
+            statusCode: ResponseCode.unknown,
+            message: ResponseMessage.unknown);
       default:
         return Failure(
             statusCode: ResponseCode.unknown, message: ResponseMessage.unknown);
     }
   }
+}
+
+
+class ApiInternalStatus{
+  static const int success = 0;
+  static const int failure = 1;
 }
 
 class ResponseCode {
