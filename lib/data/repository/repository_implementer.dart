@@ -6,8 +6,8 @@ import 'package:tut_app/data/network/failure.dart';
 import 'package:tut_app/data/network/network_info.dart';
 import 'package:tut_app/data/request/request.dart';
 import 'package:tut_app/data/responses/responses.dart';
-import 'package:tut_app/domain/models.dart';
-import 'package:tut_app/domain/repository.dart';
+import 'package:tut_app/domain/model/models.dart';
+import 'package:tut_app/domain/repository/repository.dart';
 
 class RepositoryImpl extends Repostory {
   final RemoteDataSource _remoteDataSource;
@@ -19,24 +19,19 @@ class RepositoryImpl extends Repostory {
   Future<Either<Failure, AuthenticationResponse>> login(
       LoginRequest loginRequest) async {
     if (await _networkInfo.isConnected) {
-      try{
+      try {
         final response = await _remoteDataSource.login(loginRequest);
 
         if (response.status == ApiInternalStatus.success) {
           return Right(response.toDomain());
-        } 
-        else {
+        } else {
           return Left(Failure(
-            statusCode: response.status ?? ApiInternalStatus.failure,
-            message: response.message ??
-                ResponseMessage.unknown));
+              statusCode: response.status ?? ApiInternalStatus.failure,
+              message: response.message ?? ResponseMessage.unknown));
         }
-
-      }catch(error){
+      } catch (error) {
         return (Left(ErrorHandler.handle(error).failure));
-
       }
-      
     } else {
       return Left(DataSource.noInternetConnection.getFailure());
     }
