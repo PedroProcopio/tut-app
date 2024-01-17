@@ -1,6 +1,6 @@
 const imagePath = "assets/images";
 
-class ImageAssets{
+class ImageAssets {
   static const String splashLogo = "$imagePath/splash_logo.png";
   static const String onBoardingLogo1 = "$imagePath/onboarding_logo1.svg";
   static const String onBoardingLogo2 = "$imagePath/onboarding_logo2.svg";
@@ -10,5 +10,4 @@ class ImageAssets{
   static const String solidCircle = "$imagePath/solid_circle_ic.svg";
   static const String rightArrow = "$imagePath/right_arrow_ic.svg";
   static const String leftArrow = "$imagePath/left_arrow_ic.svg";
-
 }
