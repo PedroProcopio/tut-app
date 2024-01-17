@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tut_app/app/dependency_injection.dart';
+import 'package:tut_app/data/datasource/remote_data_source.dart';
+import 'package:tut_app/data/repository/repository_implementer.dart';
+import 'package:tut_app/domain/repository/repository.dart';
+import 'package:tut_app/domain/usecase/login_usecase.dart';
 import 'package:tut_app/presentation/login/login_viewmodel.dart';
 import 'package:tut_app/presentation/resources/assets_manager.dart';
 import 'package:tut_app/presentation/resources/color_manager.dart';
@@ -15,10 +20,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _viewModel = LoginViewModel(null);
-
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final LoginViewModel _viewModel = instance<LoginViewModel>();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
