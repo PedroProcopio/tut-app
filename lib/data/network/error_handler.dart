@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:tut_app/data/network/failure.dart';
 

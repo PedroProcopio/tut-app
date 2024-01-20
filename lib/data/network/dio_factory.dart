@@ -15,7 +15,7 @@ class DioFactory{
   Future<Dio> getDio() async{
     Dio dio = Dio();
 
-    Duration _timeOut = Duration(seconds: 60*1000);
+    Duration timeOut = const Duration(seconds: 60*1000);
 
     Map<String,String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
@@ -27,8 +27,8 @@ class DioFactory{
 
     dio.options = BaseOptions( 
       baseUrl: Constants.baseUrl,
-      connectTimeout: _timeOut,
-      receiveTimeout: _timeOut,
+      connectTimeout: timeOut,
+      receiveTimeout: timeOut,
       headers: headers
     );
 

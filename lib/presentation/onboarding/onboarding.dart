@@ -133,8 +133,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  Widget _getProperCircle(int index, int _currentIndex) {
-    if (index == _currentIndex) {
+  Widget _getProperCircle(int index, int currentIndex) {
+    if (index == currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircle);
     } else {
       return SvgPicture.asset(ImageAssets.solidCircle);

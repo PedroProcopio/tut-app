@@ -7,7 +7,7 @@ import 'package:tut_app/domain/repository/repository.dart';
 import 'package:tut_app/domain/usecase/base_usecase.dart';
 
 class LoginUseCase implements BaseUseCase {
-  Repostory _repostory;
+  final Repostory _repostory;
 
   LoginUseCase(this._repostory);
 

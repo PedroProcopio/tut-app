@@ -16,9 +16,9 @@ class LoginViewModel extends BaseViewModel
   final StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
 
-  var loginObject = LoginObject(username: "", password: "");
+  var loginObject = const LoginObject(username: "", password: "");
 
-  LoginUseCase _loginUseCase;
+  final LoginUseCase _loginUseCase;
   LoginViewModel(this._loginUseCase);
 
   //METHODS

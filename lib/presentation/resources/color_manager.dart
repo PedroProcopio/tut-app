@@ -19,7 +19,7 @@ extension HexColor on Color {
   static Color fromHex(String hexString){
     hexString.replaceAll("#", "");
     if(hexString.length == 6){
-      hexString = "FF" + hexString;
+      hexString = "FF$hexString";
     }
 
     return Color(int.parse(hexString, radix: 16),);
