@@ -34,8 +34,6 @@ Future<void> initAppModule() async {
 
   instance.registerLazySingleton<Repostory>(
       () => RepositoryImpl(instance(), instance()));
-
-  initAppModule();
 }
 
 initLoginModule() {

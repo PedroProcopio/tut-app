@@ -22,4 +22,6 @@ class AppStrings {
   static const String login = "Login";
   static const String forgetPassword = "Forgot your password?";
   static const String dontHaveAccount = "Create an account";
+
+  static const String loading = "Loading";
 }
