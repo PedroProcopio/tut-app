@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorManager{
+class ColorManager {
   static Color primary = HexColor.fromHex("ED9728");
   static Color darkGrey = HexColor.fromHex("525252");
   static Color grey = HexColor.fromHex("737477");
@@ -12,16 +12,18 @@ class ColorManager{
   static Color grey2 = HexColor.fromHex("797979");
   static Color white = HexColor.fromHex("FFFFFF");
   static Color error = HexColor.fromHex("e61f34");
-
+  static Color black = HexColor.fromHex("000000");
 }
 
 extension HexColor on Color {
-  static Color fromHex(String hexString){
+  static Color fromHex(String hexString) {
     hexString.replaceAll("#", "");
-    if(hexString.length == 6){
+    if (hexString.length == 6) {
       hexString = "FF$hexString";
     }
 
-    return Color(int.parse(hexString, radix: 16),);
+    return Color(
+      int.parse(hexString, radix: 16),
+    );
   }
 }
